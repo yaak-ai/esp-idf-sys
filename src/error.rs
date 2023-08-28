@@ -75,6 +75,12 @@ impl EspError {
 #[cfg(feature = "std")]
 impl std::error::Error for EspError {}
 
+impl embedded_io::Error for EspError {
+    fn kind(&self) -> embedded_io::ErrorKind {
+        embedded_io::ErrorKind::Other
+    }
+}
+
 impl fmt::Display for EspError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         unsafe fn strlen(c_s: *const ffi::c_char) -> usize {
